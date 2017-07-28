@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Fruškoj gori</title>
+<meta name="Description" content="Iznajmljivanje Sony PlayStation  Novi Sad - Iznajmite Sony PlayStation 2 PS2, Sony PlayStation 3 PS3, Sony PlayStation 4 PS4 u Novom Sadu - 064 10 90 745">
+<meta name="Keywords" content="iznajmljivanje, izdavanje, playstation, pes, ps2, ps3, ps4, novi sad, iznajmljivanje sony playstation novi sad, plejstejšn,  soni">
+<meta name="Author" content="PlayStation PS Novi Sad Team">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Revisit-After" content="30 days">
+<meta name="Robots" content="INDEX,FOLLOW">
+<meta name=viewport content="width=device-width, initial-scale=1">
+<!-- Facebook Open Graph Meta Tags -->
+<meta property="og:title" content="Iznajmljivanje Sony PlayStation  - Novi Sad" >
+<meta property="og:type" content="website" >
+<meta property="og:url" content="http://tic-tac-toe.joker007.net/tic_tac_toe_game_online!menu.php" >
+<meta property="og:image" content="http://tic-tac-toe.joker007.net/img/meni/tic_tac_toe_game_online!tic-tac-toe.png" >
+<meta property="og:description" content="Iznajmljivanje Sony PlayStation  Novi Sad - Iznajmite Sony PlayStation 2 PS2, Sony PlayStation 3 PS3, Sony PlayStation 4 PS4 u Novom Sadu - 064 10 90 745" >
+<link rel="icon" type="image/png" href="./favicon.ico" >
+<link rel="stylesheet" href="./css/fg-11.css" />
+
+
+
+<link rel="stylesheet" href="./css/normalize.css"/>
+<link rel="stylesheet" href="./css/leaflet.css"/>
+
+	
+	<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
+
+	<link rel="stylesheet" href="./css/leaflet.elevation-0.0.4.css" />
+	
+
+
+
+<link rel="stylesheet" href="./css/ion.rangeSlider.css"/>
+<link rel="stylesheet" href="./css/ion.rangeSlider.skinModern.css"/>
+<!--<link rel="stylesheet" href="./css/ion.rangeSlider.skinFlat.css"/>-->
+
+
+
+
+
+
+ <script type="text/javascript" src="cordova.js"></script>
+
+
+
+
+	
+
+
+<script src="./js/jquery.js"></script>
+<script src="./js/ion.rangeSlider.min.js"></script>
+
+
+<script src="./js/togeojson.js"></script>
+
+<script src="./js/leaflet.js"></script>
+<script src="./layer/Layer.Deferred.js"></script>
+<script src="./layer/tile/Google.js"></script>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="./js/leaflet.elevation-0.0.4.min.js"></script>
+	<script type="text/javascript" src="./js/gpx.js"></script>
+
+
+<script src="./js/geojson/track-baza-1.js"></script>
+<script src="./js/geojson/track-baza-2.js"></script>
+<script src="./js/geojson/track-baza-3.js"></script>
+
+<script src="./js/geojson/wp-sve-11.js"></script>
+<script src="./js/geojson/set-pop-11.js"></script>
+
+<script src="./js/geojson/tr-11.js"></script>
+
+
+
+</head>
+
+
+<body>
+<script>  
+    var wpGroup=[];
+    var wpStatus=[];
+    var wpBroj=62;
+    wpGroup[0]=[44,47,53,54,55,56];
+    wpGroup[1]=[1,2,3,4,5,6];
+    wpGroup[2]=[7,8,9,10,11,48];
+    wpGroup[3]=[12,13,14,15,16,17];
+    wpGroup[4]=[18,19,20,21];
+    wpGroup[5]=[22,23,24,25,26,27];
+    wpGroup[6]=[28,29,30,31,32,33,34,50];
+    wpGroup[7]=[35,36,37,38,39,40,41];
+    wpGroup[8]=[42,43,45,46,49,51,52];
+        
+    for(var i=0;i<wpBroj;i++){
+    wpStatus[i]=0;
+    }
+
+    
+    var arrLayeriZaStaze=[];
+var g={};
+var elevationDodata=0;
+var showWayPointInTrackOrNot=0;
+
+var ispis_opis_1;
+
+
+function skiniKukice(str){
+	//alert(str);
+	///foo/g
+	str=str.replace(/Š/g, "S");	
+	str=str.replace(/Č/g, "C");
+	str=str.replace(/Ć/g, "C");
+	str=str.replace(/Ž/g, "Z");
+	str=str.replace(/Đ/g, "DJ");
+	str=str.replace(/š/g, "s");
+	str=str.replace(/č/g, "c");
+	str=str.replace(/ć/g, "c");
+	str=str.replace(/ž/g, "z");
+	str=str.replace(/đ/g, "dj");
+	return str;	 		
+}//fun
+
+function prilagodiLinku(str){
+	str=skiniKukice(str);
+	str=str.replace(/\s/g, "_");
+	str=str.replace(/\//g, "_");
+	str=str.toLowerCase();
+	return str;	 		
+}//fun
+
+ 
+
+
+function getWpGropupFromId(wpid){
+	for (i = 0; i < wpGroup.length; i++) {
+    	if($.inArray(wpid, wpGroup[i]) >=0){ return i;}
+		} 		
+}//fun
+
+
+function change_wpStatus(wpid,swtype){
+ 		switch(swtype){
+ 			case 0:
+				wpStatus[wpid]=0;
+			break;	
+			case 1:
+				wpStatus[wpid]=1;
+			break;	
+ 			case 2:
+				if(wpStatus[wpid]==0){wpStatus[wpid]=1;}else{wpStatus[wpid]=0;}
+			break;	
+		}//sw		
+}//fun
+function change_wpStatus_forGroup(grid,swtype){ 		
+ 		for (i = 0; i < wpGroup[grid].length; i++) {
+    	change_wpStatus(wpGroup[grid][i],swtype);
+		} 		
+}//fun
+ 	
+ 	
+ 	var track_baza ={};
+ 	track_baza.staze =track_baza_1.staze.concat(track_baza_2.staze).concat(track_baza_3.staze);
+ 	track_baza_1 = null;
+ 	track_baza_2 = null;
+ 	track_baza_3 = null;
+ $(document).ready(function() {
+
+ 	
+ 	$.each(track_baza.staze, function(index, element) {
+ 		element.id_u_nizu=index; 	
+ 	});
+ 	
+ 	
+ $('#divleft').on('change', '[id^=chb_track_]', function(){
+    // $('[id^=chb_track_]').bind('change',function(){  		
+  	
+      	var kliknut=$(this).attr('id').replace("chb_track_", "");
+      	var kojaGrupa=$(this).attr('name').replace("chb_grupa_", "");      
+        var arrRezultatIndexUTrack_bazaStaze = $.grep(track_baza.staze, function (e) { return e.id == kliknut; });
+				var indexKliknutogUTrack_bazaStaze=arrRezultatIndexUTrack_bazaStaze[0].id_u_nizu;        
+        if($(this).is(":checked")) {    			
+    				dodajLayerOveStaze(indexKliknutogUTrack_bazaStaze);   
+    				grupaNiz[kojaGrupa].addLayer( arrLayeriZaStaze[indexKliknutogUTrack_bazaStaze]);  			    		
+    				//alert($(this).val());
+    		}
+    		else{
+    				if(grupaNiz[kojaGrupa].hasLayer( arrLayeriZaStaze[indexKliknutogUTrack_bazaStaze])){
+    				grupaNiz[kojaGrupa].removeLayer( arrLayeriZaStaze[indexKliknutogUTrack_bazaStaze]);  	
+    				}		    		
+    		}
+ });//bind 	
+
+ 
+ 
+ 
+ 
+ $('#opis1').on('click', '[id=a_printpdf]', function(){
+ 	//alert(22222);
+ 	$("form[id='frm_printpdf']").submit();
+});
+ 
+$('#divleft').on('change', '[name=rad_elev]', function(){
+  var ime_file=this.value;
+	if(elevationDodata==0){
+		map.addControl(el);
+		elevationDodata=1;
+		$("#btn5elev").attr('class', 'but_elev_1');
+	 }
+	 
+	map.removeLayer(g);
+	g=new L.GPX(this.value, {async: true});
+	g.on("addline",function(e){
+       el.clear();
+  		 el.addData(e.line);
+	});
+	g.addTo(map);
+  
+	g.on('loaded', function(e) {
+  	//alert("duzina="+e.target.get_distance()+"\n"+"gore="+e.target.get_elevation_gain()+"\n"+"dole="+e.target.get_elevation_loss());
+		ispis_opis_1='<a href="'+ime_file+'" download > Prevucite GPX datoteku</a>';
+		ispis_opis_1+='<a id="a_printpdf"> Odštampaj</a>';
+		ispis_opis_1+="<br>"+"duzina="+e.target.get_distance()+" | "+"gore="+e.target.get_elevation_gain()+" | "+"dole="+e.target.get_elevation_loss();
+		//alert(ispis_opis_1);
+ 		$("#opis1").html(ispis_opis_1);
+	});
+  
+
+  var kliknut=$(this).attr('id').replace("rad_track_", "");      	
+  var arrRezultatIndexUTrack_bazaStaze = $.grep(track_baza.staze, function (e) { return e.id == kliknut; });
+	var indexKliknutogUTrack_bazaStaze=arrRezultatIndexUTrack_bazaStaze[0].id_u_nizu; 
+	//	alert(indexKliknutogUTrack_bazaStaze);
+	dodajLayerOveStaze(indexKliknutogUTrack_bazaStaze);
+    
+    
+  arrRezultatWayPoint = $.grep(track_baza.staze[indexKliknutogUTrack_bazaStaze].t_geojson.features, function (e) { return e.geometry.type=="Point"; });
+  arrRezultatTrack = $.grep(track_baza.staze[indexKliknutogUTrack_bazaStaze].t_geojson.features, function (e) { return e.geometry.type=="LineString"; });
+  //$("#opis2").html(JSON.stringify(arrRezultatWayPoint));
+  
+  var ispis_opis_2;
+  ispis_opis_2="";
+  
+  
+  j=1000;
+  $.each(arrRezultatWayPoint, function(i, item) {
+  	item.properties.sort=j-i;
+  	item.properties.idbr=i;  	
+  	minDistance=999999;
+  	for(k=0;k<arrRezultatTrack[0].geometry.coordinates.length;k++){
+    		myDistance=distance(arrRezultatWayPoint[i].geometry.coordinates[0], arrRezultatWayPoint[i].geometry.coordinates[1], arrRezultatTrack[0].geometry.coordinates[k][0], arrRezultatTrack[0].geometry.coordinates[k][1]);
+				if(myDistance < minDistance){
+					minDistance=myDistance;
+					item.properties.inearest=k;	
+					 	item.properties.sort=k;				
+				}
+		}	  	 
+	});	
+  arrRezultatWayPoint= arrRezultatWayPoint.sort(function(a, b) {
+        if (1) return (a.properties.sort > b.properties.sort);
+        else return (b.properties.sort > a.properties.sort);
+  }); 
+	
+	//ispis_opis_2+='<h2>'+arrRezultatTrack[0].properties.name+'</h2>';	
+	ispis_opis_2+='<h2>'+track_baza.staze[indexKliknutogUTrack_bazaStaze].ime+'</h2>';	
+	ispis_opis_2+='<hr>';	
+ispis_opis_2+='<p class="p_opis">';	
+ispis_opis_2+='<br>'+'duzina:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].duzina;
+ispis_opis_2+='<br>'+'tezina:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].tezina;
+ispis_opis_2+='<br>'+'lepota:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].lepota;
+ispis_opis_2+='<br>'+'uspon:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].uspon;
+ispis_opis_2+='<br>'+'spust:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].spust;
+ispis_opis_2+='<br>'+'polazak:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].polazak;
+ispis_opis_2+='<br>'+'mark:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].mark;
+ispis_opis_2+='<br>'+'bus:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].bus;
+ispis_opis_2+='<br>'+'bike:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].bike;
+ispis_opis_2+='<br>'+'kruzna:'+track_baza.staze[indexKliknutogUTrack_bazaStaze].kruzna;
+ispis_opis_2+='</p>';	
+	ispis_opis_2+='<hr>';
+	ispis_opis_2+='<p class="p_opis">'+track_baza.staze[indexKliknutogUTrack_bazaStaze].opis1+'</p>';	
+	
+	
+
+
+	
+	ispis_opis_2+='<table class="table_opis">';	
+	ispis_opis_2+='<thead>';	
+	ispis_opis_2+='</thead>';	
+	ispis_opis_2+='<tbody>';	
+	for(i=0;i<arrRezultatWayPoint.length;i++){
+				$.ajax({  		
+  				url: 'get_image.php?wp='+arrRezultatWayPoint[i].properties.name
+				});//ajax
+		
+  //	  ispis_opis_2+="<br>"+arrRezultatWayPoint[i].properties.name+" = "+arrRezultatWayPoint[i].properties.idbr +" |  "+arrRezultatWayPoint[i].properties.sort + "***" + arrRezultatWayPoint[i].geometry.coordinates[0]+"-----"+arrRezultatWayPoint[i].properties.inearest;
+  	  //ispis_opis_2+='<br>'+'<img src="get_image.php?wp='+arrRezultatWayPoint[i].properties.name+'">'+arrRezultatWayPoint[i].properties.name+' === '+arrRezultatWayPoint[i].properties.desc;
+  	  
+  	  ispis_opis_2+='<tr class="div_red_'+i%2+'">';
+  	  
+    	ispis_opis_2+='<td style="width:4%">';
+  	  ispis_opis_2+=i+1;
+ 			ispis_opis_2+='</td>'
+  	  ispis_opis_2+='<td style="width:6%">';
+  	  ispis_opis_2+='<img src="'+convertInFileName(arrRezultatWayPoint[i].properties.sym)+'">';
+ 			ispis_opis_2+='</td>';
+  	  
+  	  ispis_opis_2+='<td style="width:8%">';
+  	  ispis_opis_2+='<a target="wp" href="wp.php?wp='+arrRezultatWayPoint[i].properties.name+'">';  	  
+  	  //ispis_opis_2+='<img src="get_image.php?wp='+arrRezultatWayPoint[i].properties.name+'" width="50px" height="50px">';
+  	  ispis_opis_2+='<img src="./wp/'+prilagodiLinku(arrRezultatWayPoint[i].properties.name)+'/tn_'+prilagodiLinku(arrRezultatWayPoint[i].properties.name)+'.jpg'+'" width="50px" height="50px">';
+						
+			ispis_opis_2+='</a>';
+ 			ispis_opis_2+='</td>';
+ 			ispis_opis_2+='<td style="width:22%">';  	  
+  	  ispis_opis_2+=arrRezultatWayPoint[i].properties.name;
+ 			ispis_opis_2+='</td>';
+ 			ispis_opis_2+='<td style="width:60%">';  	  
+  	  ispis_opis_2+=arrRezultatWayPoint[i].properties.desc;
+ 			ispis_opis_2+='</td>'; 			
+ 			ispis_opis_2+='</tr>';
+ 	}
+ 	ispis_opis_2+='</tbody>';	
+ 	ispis_opis_2+="</table>";
+ 
+
+ 	$("#hid_printpdf").val(ispis_opis_2);
+ 	 	ispis_opis_3='<img src="'+ime_file.replace(".gpx", ".jpg")+'">';
+ 	$("#hid_printpdf_3").val(ispis_opis_3);
+ 	
+ 	ispis_opis_2+=ispis_opis_3;
+ 	
+ $("#opis2").html(ispis_opis_2);
+ 
+  //$("#hid_printpdf").val(ispis_opis_2);
+  // $("#hid_printpdf").val("<h1>dddpoi</h1>opikjkj");
+  
+  
+   
+  
+});//bind 	
+
+function distance(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;    // Math.PI / 180
+  var c = Math.cos;
+  var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+          c(lat1 * p) * c(lat2 * p) * 
+          (1 - c((lon2 - lon1) * p))/2;
+  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+}
+function sortResults(prop, asc) {
+    arrRezultat= arrRezultat.sort(function(a, b) {
+        if (asc) return (a.properties.sort > b.properties.sort);
+        else return (b.properties.sort > a.properties.sort);
+    });
+   // showResults();
+}
+
+
+    $("#btn1").click(function(){
+       // alert("open");
+        	//coorsLayer.addTo(map);
+        	 //coorsLayer.bringToFront();
+//grupa1.addLayer(coorsLayer);        	 
+//grupa1.addLayer(coolPlaces);   
+
+  	 
+
+
+//L.geoJson(track_11).addTo(map);
+//grupaNiz[1].addLayer(tr11_Layer);     	 
+});//click 
+$("#btn2").click(function(){
+       //alert("close");
+       // coorsLayer.bringToBack();
+        	//coorsLayer.removeFrom(map);
+        	
+        	//grupa1.removeLayer(coorsLayer);  
+        	//grupa1.clearLayers();
+        	
+        	//grupaNiz[1].removeLayer(testGrupa);     	         	
+        	//grupaNiz[1].clearLayers();
+        	//grupaNiz[1].removeLayer(tr11_Layer);     	 
+        	
+        	
+});//click    
+
+
+
+ 		 
+$("#btn4w").click(function(){	
+	$('#divleft').attr('class', 'div_left_wide');
+	map.invalidateSize();
+});//click    
+$("#btn4u").click(function(){	
+	$('#divleft').attr('class', 'div_left');
+	map.invalidateSize();
+});//click   		 
+$("#btn4m").click(function(){
+	$('#divleft').attr('class', 'div_left_min');
+	map.invalidateSize();
+});//click   		 
+$("#btn4c").click(function(){
+	$('#divleft').attr('class', 'div_left_ceo');
+	 map.invalidateSize();
+	 
+});//click   		 
+
+ 		
+$("#btn5elev").click(function(){
+	if(elevationDodata==0){
+		map.addControl(el);
+		elevationDodata=1;		
+		$(this).attr('class', 'but_elev_1');
+	}
+	else{
+		map.removeControl(el);
+		elevationDodata=0;		
+		$(this).attr('class', 'but_elev_0');
+		map.removeLayer(g);
+		$('[name=rad_elev]').removeAttr('checked');
+		  el.clear();
+		$("#opis1").html("");
+		$("#opis2").html("");		
+	}
+});//click   		 
+ 		
+ 		
+$("#btn6wayornot").click(function(){
+	if(showWayPointInTrackOrNot==0){
+		showWayPointInTrackOrNot=1;
+		$(this).attr('class', 'but_waypoint_1');
+	}	
+	else{
+		showWayPointInTrackOrNot=0;
+		$(this).attr('class', 'but_waypoint_0');
+	}
+		
+			grupaNiz[1].clearLayers();
+ 			grupaNiz[2].clearLayers();
+ 			grupaNiz[3].clearLayers();
+ 			grupaNiz[4].clearLayers();
+			$('[id^=chb_track_]').trigger('change');
+	
+});//click  	
+ 		
+ 		
+$('#wportr_12').click(function(){
+ 	$('#men_wp').hide();
+ 	$('#men_tr').show();
+ 	$('#wportr_11').removeClass('nadmeni_1');
+ 	$('#wportr_11').addClass('nadmeni_0');
+ 	$('#wportr_12').removeClass('nadmeni_0');
+ 	$('#wportr_12').addClass('nadmeni_1');
+ 		$('[id^=wpg_]').removeClass('menidiv_select');
+ 		$('[id^=wpm_]').hide();
+ 		$('#wpm_a').show();
+ 		
+ 	
+ }); 
+$('#wportr_11').click(function(){
+ 	$('#men_tr').hide();
+ 	$('#men_wp').show();
+ 	$('#wportr_12').removeClass('nadmeni_1');
+ 	$('#wportr_12').addClass('nadmeni_0');
+ 	$('#wportr_11').removeClass('nadmeni_0');
+ 	$('#wportr_11').addClass('nadmeni_1');
+		$('[id^=wpg_]').removeClass('menidiv_select');
+		$('[id^=wpm_]').hide();
+		$('#wpm_a').show();
+
+ }); 
+
+
+
+ 		
+ 		
+ 
+ 		
+$('[id^=wpg_]').click(function(){
+ 			var kliknut=$(this).attr('id').replace("wpg_", "");
+       // alert(kliknut);
+ 	$('[id^=wpm_]').hide()
+ 	$('#wpm_'+kliknut).show()
+
+
+$('[id^=wpg_]').removeClass('menidiv_select');
+$(this).addClass('menidiv_select');
+
+ switch(kliknut){
+ case '91':
+		$('#wpsm_1').trigger('click');		
+ break;
+ case '92':
+		$('#wpss_1').trigger('click');		
+		//$('[id^=polje_]').hide();
+		//$('#polje_2_0').show();
+ break;
+ case '93':
+ 		$('#wpst_1').trigger('click');		
+		//$('[id^=polje_]').hide();
+		//$('#polje_3_0').show();
+ break;
+ case '94':
+		$('[id^=polje_]').hide();
+		$('#polje_4_0').show();
+ break;
+ 
+ }//sw
+
+  }); 
+ 		
+
+$('[id^=wpi_]').click(function(){
+  // alert(JSON.stringify(wpStatus));
+  //console.log("preee= "+JSON.stringify(wpStatus))
+   var kliknut=parseInt($(this).attr('id').replace("wpi_", ""));
+   if(kliknut <1000){
+   	 change_wpStatus(kliknut,2);   
+   	 switch(wpStatus[kliknut]){   	 	
+   	 	case 0:
+   	 		grupa1.removeLayer(arGrupaLayerWp[kliknut]);
+   	 	break;
+   	 	case 1:   	
+   	 		grupa1.addLayer(arGrupaLayerWp[kliknut]);
+   	 	break;
+   	 	}//sw   	 
+   	 	var newClass="menidiv_wp_"+wpStatus[kliknut];
+   	 	$(this).attr("class",newClass);
+
+   }//if(kliknut <1000){
+   else{
+  	 	var rad=kliknut-1000;
+   		var idgr=Math.floor(rad/10);
+   		var swtype=rad % 10;
+   		if(idgr<99){
+   			 change_wpStatus_forGroup(idgr,swtype);
+   			 for (i = 0; i < wpGroup[idgr].length; i++) {
+    				switch(wpStatus[wpGroup[idgr][i]]){   	 	
+   	 			case 0:
+   	 				grupa1.removeLayer(arGrupaLayerWp[wpGroup[idgr][i]]);
+   	 			break;
+   	 			case 1:   	
+   	 				grupa1.addLayer(arGrupaLayerWp[wpGroup[idgr][i]]);
+   	 			break;
+   	 			}//sw   	 
+   	 			var newClass="menidiv_wp_"+wpStatus[wpGroup[idgr][i]];
+   	 			$('[name=nwpg_'+idgr+']').attr("class",newClass);
+    	  	
+	  		}//for 	
+   		}//if(idgr<99){
+   		else{
+   			 change_wpStatus_forGroup(0,swtype);
+   			 change_wpStatus_forGroup(1,swtype);
+   			 change_wpStatus_forGroup(2,swtype);
+   			 change_wpStatus_forGroup(3,swtype);
+   			 change_wpStatus_forGroup(4,swtype);
+   			 change_wpStatus_forGroup(5,swtype);
+   			 change_wpStatus_forGroup(6,swtype);
+   			 change_wpStatus_forGroup(7,swtype);
+   			 change_wpStatus_forGroup(8,swtype);   		 
+   				if(swtype==0){
+   					grupa1.clearLayers();
+   				var newClass="menidiv_wp_0";
+   	 			$('[name^=nwpg_]').attr("class",newClass);
+   				}
+   				else{
+   						for (idgr = 0; idgr < wpGroup.length; idgr++) {
+   						for (i = 0; i < wpGroup[idgr].length; i++) {
+   							grupa1.addLayer(arGrupaLayerWp[wpGroup[idgr][i]]);
+   						}	
+   						}
+   						var newClass="menidiv_wp_1";
+   	 					$('[name^=nwpg_]').attr("class",newClass);
+   				}
+   				
+   		 }//elseif(idgr<99){
+   	    	/*
+   	    	for(var i=0;i<wpBroj;i++){
+    				wpStatus[i]=swtype;
+    		}
+    		*/
+   }//elseif(kliknut <1000){
+  // alert(JSON.stringify(wpStatus));
+ // console.log("posle= "+JSON.stringify(wpStatus))
+});  
+
+$('[id^=wpsx_]').click(function(){	
+    var kliknut=parseInt($(this).attr('id').replace("wpsx_", ""));       
+ 		switch(kliknut){
+ 		case 91: 		
+ 				grupaNiz[1].clearLayers();
+ 				$('[name^=chb_grupa_1]').attr('checked', false);
+ 		break;	
+ 		 case 92:
+ 			grupaNiz[2].clearLayers();
+ 			$('[name^=chb_grupa_2]').attr('checked', false);
+ 		break;	
+ 		 case 93:
+ 			grupaNiz[3].clearLayers();
+ 			$('[name^=chb_grupa_3]').attr('checked', false);
+ 		break;	
+ 		 case 94:
+ 			grupaNiz[4].clearLayers();
+ 			$('[name^=chb_grupa_4]').attr('checked', false);
+ 		break;	
+ 		case 999:
+ 			grupaNiz[1].clearLayers();
+ 			grupaNiz[2].clearLayers();
+ 			grupaNiz[3].clearLayers();
+ 			grupaNiz[4].clearLayers();
+ 				$('[name^=chb_grupa_1]').attr('checked', false);
+ 				$('[name^=chb_grupa_2]').attr('checked', false); 			
+ 			  $('[name^=chb_grupa_3]').attr('checked', false);
+ 			  $('[name^=chb_grupa_4]').attr('checked', false);
+ 		break;		
+   	}//sw 	
+});
+
+$('[id^=wpsm_]').click(function(){
+     var kliknut=parseInt($(this).attr('id').replace("wpsm_", ""));    
+	   $('[id^=wpsm_]').attr("class","menidiv_wp_0");
+   	 $(this).attr("class","menidiv_wp_1");
+   	 $('[id^=polje_]').hide();
+		 $('#polje_1_'+kliknut).show();
+});
+$('[id^=wpss_]').click(function(){	
+     var kliknut=parseInt($(this).attr('id').replace("wpss_", ""));    
+	   $('[id^=wpss_]').attr("class","menidiv_wp_0");
+   	 $(this).attr("class","menidiv_wp_1");
+   	 $('[id^=polje_]').hide();
+		 $('#polje_2_'+kliknut).show();
+});
+$('[id^=wpst_]').click(function(){	
+     var kliknut=parseInt($(this).attr('id').replace("wpst_", ""));    
+	   $('[id^=wpst_]').attr("class","menidiv_wp_0");
+   	 $(this).attr("class","menidiv_wp_1");
+   	 $('[id^=polje_]').hide();
+		 $('#polje_3_'+kliknut).show();
+});
+
+$("#btn3").click(function(){
+		var kojaGrupa=4;
+    var returnedData = $.grep(track_baza.staze, function (element, index) {
+    		return element.tip=="setnja";
+		});		
+		popuniPolje(returnedData,kojaGrupa,0);
+
+});//click    
+
+
+//napuni polja
+for(var k=1;k<=11;k++){
+			var kojaGrupa=1;
+	 		var returnedData = $.grep(track_baza.staze, function (element, index) {
+    	//return element.id > 0 && element.duzina > 0;
+    	return element.tip=="markirana" && element.grupa==k;
+		});		
+		popuniPolje(returnedData,kojaGrupa,k);
+}
+for(var k=1;k<=5;k++){
+			var kojaGrupa=2;
+	 		var returnedData = $.grep(track_baza.staze, function (element, index) {
+    	//return element.id > 0 && element.duzina > 0;
+    	return element.tip=="setnja" && element.grupa==k;
+		});		
+		popuniPolje(returnedData,kojaGrupa,k);
+}
+for(var k=1;k<=5;k++){
+			var kojaGrupa=3;
+	 		var returnedData = $.grep(track_baza.staze, function (element, index) {
+    	//return element.id > 0 && element.duzina > 0;
+    	return element.tip=="trek" && element.grupa==k;
+		});		
+		popuniPolje(returnedData,kojaGrupa,k);
+}
+
+
+
+
+
+function popuniPolje(returnedData,kojaGrupa,k){
+		$("#polje_"+kojaGrupa+'_'+k).empty();	
+		var i;
+		var parnepar=0;
+		for (i = 0; i < returnedData.length; ++i) {	    
+  		counter=i;  	
+  		if(parnepar==0){parnepar=1;}else{parnepar=0;}
+			var newTextBoxDiv = $(document.createElement('div'))
+	    	 .attr("id", 'TextBoxDiv' + counter);                            
+  		newTextBoxDiv.after().html(
+  			'<div class="div_red_'+parnepar+'">'
+  			+ '<label>'+ (counter+1) + ' : </label>' 
+  			+ '<label>'+ returnedData[i].id + ' : </label>' 
+  			+ '<input type="radio" id="rad_track_'+returnedData[i].id+'" name="rad_elev" value="./js/gpx/'+returnedData[i].tip+'/'+returnedData[i].grupa+'/'+returnedData[i].gpxime+'"> '
+  			+ '<input type="checkbox" id="chb_track_'+returnedData[i].id+'" name="chb_grupa_'+kojaGrupa+'" value="'+returnedData[i].ime+'">'
+  			+ '<img class="img_staza_mala" src="./img-w/zast/'+returnedData[i].oznaka+'">'
+  			+ '<svg height="20" width="40"> <line x1="0" y1="10" x2="35" y2="10" class="'+returnedData[i].stil+'"/></svg>'
+  			+ returnedData[i].ime
+  			+ '<div>'
+	    );
+   		newTextBoxDiv.appendTo("#polje_"+kojaGrupa+'_'+k);        	
+	  }//for  
+
+}
+
+
+$("#range_01").ionRangeSlider({
+    type: "double",
+    grid: true,
+    //min: 1,
+    //max: 120,
+    from: 4,
+    to: 6,
+    min_interval:1,
+   // step: 1
+    values: [1, 2, 3, 5, 8, 13, 21,34,55,89,144]
+});
+$("#range_02").ionRangeSlider({
+    grid: true,
+    min: 1,
+    max: 5,
+    from: 3   
+});
+
+});//end   
+    
+  
+    
+    // alert("11");
+     </script>
+
+<img src="bg23.jpg" class="bg">
+	
+<div id="men_nadmeni" class="cmeni-map" style="text-align: left;display:block;min-height:30px;">
+<span  id="div_na_poc" class="menidiv menidiv_home" style="margin-right:30px;"><a href="10.html">POČETNA</a></span>
+<span id="wportr_11" class="nadmeni nadmeni_1">MESTA11</span><span id="wportr_12" class="nadmeni nadmeni_0">STAZE</span>
+</div>			
+		
+<div id="men_wp" class="cmeni-map" style="text-align: center;display:block;min-height:30px;">
+<!--<div id="wpi_1991" class="menidiv">Dodaj sve</div>
+<div id="wpi_1990" class="menidiv">Ukloni sve</div>-->
+
+
+
+
+<div id="wpi_1991" class="menidiv"><img src="./img-m/bb_score_1.png"></div>
+<div id="wpi_1990" class="menidiv"><img src="./img-m/bb_score_0.png"></div>
+
+
+<div id="wpg_1" class="menidiv"><img class="img_zast" src="./img-w/zast/1.png">Istorija</div>
+<div id="wpg_2" class="menidiv"><img class="img_zast" src="./img-w/zast/2.png">Geografija</div>
+<div id="wpg_3" class="menidiv"><img class="img_zast" src="./img-w/zast/3.png">Hidrografija</div>
+<div id="wpg_4" class="menidiv"><img class="img_zast" src="./img-w/zast/4.png">Fauna</div>
+<div id="wpg_5" class="menidiv"><img class="img_zast" src="./img-w/zast/5.png">Flora</div>
+<div id="wpg_6" class="menidiv"><img class="img_zast" src="./img-w/zast/6.png">Turizam</div>
+<div id="wpg_7" class="menidiv"><img class="img_zast" src="./img-w/zast/7.png">Ugostiteljstvo</div>
+<div id="wpg_8" class="menidiv"><img class="img_zast" src="./img-w/zast/8.png">Saobracaj</div>
+<div id="wpg_0" class="menidiv"><img class="img_zast" src="./img-w/zast/0.png">Razno</div>		
+
+</div>
+
+
+<div id="men_tr" class="cmeni-map" style="text-align: center;display:none;min-height:30px;">
+
+
+
+
+<div id="wpsx_999" class="menidiv"><img src="./img-m/bb_score_0.png"></div>
+	
+	<div id="wpg_91" class="menidiv"><img class="img_zast" src="./img-w/zast/Markirane_Staze.png">Markirane staze</div>		
+	<div id="wpg_92" class="menidiv"><img class="img_zast" src="./img-w/zast/Setnje_Predlozi.png">Staze za šetanje</div>		
+	<div id="wpg_93" class="menidiv"><img class="img_zast" src="./img-w/zast/Setnje_Nase.png">Trekovi naši</div>		
+	<div id="wpg_94" class="menidiv"><img class="img_zast" src="./img-w/zast/Izbor.png">Pretraga staza</div>		
+</div>
+
+<div id="wpm_a" class="cmeni-map" style="text-align: center;display:block;">
+	
+</div>
+
+
+
+<div id="wpm_1" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1011" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1010" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_3" name="nwpg_1" class="menidiv_wp_0"><img src="./img-w/church.png"><br>Manastiri_Crkve</div>	
+<div id="wpi_4" name="nwpg_1" class="menidiv_wp_0"><img src="./img-w/custom_25.png"><br>Verski_Obj.</div>	
+<div id="wpi_2" name="nwpg_1" class="menidiv_wp_0"><img src="./img-w/cemetery.png"><br>Spomenici</div>	
+<div id="wpi_6" name="nwpg_1" class="menidiv_wp_0"><img src="./img-w/museum.png"><br>Muzeji</div>	
+<div id="wpi_5" name="nwpg_1" class="menidiv_wp_0"><img src="./img-w/ghost_town.png"><br>Arheologija</div>	
+<div id="wpi_1" name="nwpg_1" class="menidiv_wp_0"><img src="./img-w/building.png"><br>Dvorci_Vile</div>	
+
+
+
+</div>
+
+<div id="wpm_2" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1021" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1020" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_7" name="nwpg_2" class="menidiv_wp_0"><img src="./img-w/city__medium_.png"><br>Naselja</div>	
+<div id="wpi_8" name="nwpg_2" class="menidiv_wp_0"><img src="./img-w/city__small_.png"><br>Lokacije</div>	
+<div id="wpi_10" name="nwpg_2" class="menidiv_wp_0"><img src="./img-w/summit.png"><br>Vrhovi_Kote</div>	
+<div id="wpi_48" name="nwpg_2" class="menidiv_wp_0"><img src="./img-w/tall_tower.png"><br>Repetitori</div>	
+<div id="wpi_11" name="nwpg_2" class="menidiv_wp_0"><img src="./img-w/tunnel.png"><br>Pećine</div>	
+<div id="wpi_9" name="nwpg_2" class="menidiv_wp_0"><img src="./img-w/mine.png"><br>Kamenolomi</div>	
+
+</div>
+
+<div id="wpm_3" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1031" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1030" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_12" name="nwpg_3" class="menidiv_wp_0"><img src="./img-w/drinking_water.png"><br>Česme</div>	
+<div id="wpi_17" name="nwpg_3" class="menidiv_wp_0"><img src="./img-w/water_source.png"><br>Izvori</div>	
+<div id="wpi_15" name="nwpg_3" class="menidiv_wp_0"><img src="./img-w/levee.png"><br>Bunari_Pojila</div>	
+<div id="wpi_13" name="nwpg_3" class="menidiv_wp_0"><img src="./img-w/dropoff.png"><br>Vodopadi</div>	
+<div id="wpi_16" name="nwpg_3" class="menidiv_wp_0"><img src="./img-w/skiing_area.png"><br>Jezera</div>	
+<div id="wpi_14" name="nwpg_3" class="menidiv_wp_0"><img src="./img-w/fishing_area.png"><br>Ribnjaci</div>	
+</div>
+
+<div id="wpm_4" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1041" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1040" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_18" name="nwpg_4" class="menidiv_wp_0"><img src="./img-w/big_game.png"><br>Rezervati</div>	
+<div id="wpi_20" name="nwpg_4" class="menidiv_wp_0"><img src="./img-w/food_source.png"><br>Hranilišta</div>	
+<div id="wpi_19" name="nwpg_4" class="menidiv_wp_0"><img src="./img-w/blind.png"><br>Lov.Čeke</div>	
+<div id="wpi_21" name="nwpg_4" class="menidiv_wp_0"><img src="./img-w/hunting_area.png"><br>Lovišta</div>	
+</div>
+
+<div id="wpm_5" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1051" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1050" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_23" name="nwpg_5" class="menidiv_wp_0"><img src="./img-w/flag.png"><br>Zaštićene Oblasti</div>	
+<div id="wpi_26" name="nwpg_5" class="menidiv_wp_0"><img src="./img-w/tree_stand.png"><br>Zaštićena Stabla</div>	
+<div id="wpi_24" name="nwpg_5" class="menidiv_wp_0"><img src="./img-w/forest.png"><br>Šume</div>	
+<div id="wpi_25" name="nwpg_5" class="menidiv_wp_0"><img src="./img-w/park.png"><br>Parkovi</div>	
+<div id="wpi_22" name="nwpg_5" class="menidiv_wp_0"><img src="./img-w/cover.png"><br>Livade</div>	
+<div id="wpi_27" name="nwpg_5" class="menidiv_wp_0"><img src="./img-w/weed_bed.png"><br>Rasadnici</div>	
+</div>
+
+<div id="wpm_6" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1061" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1060" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_30" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/information.png"><br>Informacije</div>	
+<div id="wpi_29" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/fitness_center.png"><br>Izletišta</div>	
+<div id="wpi_31" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/picnic_area.png"><br>Klupe_Stolovi</div>	
+<div id="wpi_32" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/scenic_area.png"><br>Vidikovci</div>	
+<div id="wpi_33" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/stadium.png"><br>Sportski Tereni</div>	
+<div id="wpi_34" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/swimming_area.png"><br>Bazeni</div>	
+<div id="wpi_28" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/beach.png"><br>Plaže</div>	
+<div id="wpi_50" name="nwpg_6" class="menidiv_wp_0"><img src="./img-w/campground.png"><br>Kampovi</div>	
+</div>
+
+<div id="wpm_7" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1071" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1070" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_36" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/lodge.png"><br>Planinarski_Domovi</div>	
+<div id="wpi_37" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/lodging.png"><br>Hoteli Odmarališta</div>	
+<div id="wpi_39" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/restaurant.png"><br>Restorani</div>	
+<div id="wpi_35" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/bar.png"><br>Kafići</div>	
+<div id="wpi_40" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/shopping_center.png"><br>Prodavnice</div>	
+<div id="wpi_41" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/winery.png"><br>Vinarije</div>	
+<div id="wpi_38" name="nwpg_7" class="menidiv_wp_0"><img src="./img-w/residence.png"><br>Šumarske_Kuće</div>	
+
+
+
+</div>
+
+<div id="wpm_8" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1081" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1080" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_45" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/ground_transportation.png"><br>Javni_Prevoz</div>	
+<div id="wpi_42" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/boat_ramp.png"><br>Skele</div>	
+<div id="wpi_46" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/parking_area.png"><br>Parkinzi</div>	
+<div id="wpi_43" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/bridge.png"><br>Mostići</div>	
+<div id="wpi_52" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/crossing.png"><br>Raskrsnice</div>	
+<div id="wpi_49" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/toll_booth.png"><br>Rampe</div>	
+<div id="wpi_51" name="nwpg_8" class="menidiv_wp_0"><img src="./img-w/civil.png"><br>Granični Prelazi</div>
+
+	
+	
+
+
+</div>
+
+<div id="wpm_0" class="cmeni-map" style="text-align: center;">
+<div id="wpi_1001" class="menidiv_wp_0"><img src="./img-m/bb_score_1.png"></div>	
+<div id="wpi_1000" class="menidiv_wp_0"><img src="./img-m/bb_score_0.png"></div>	
+<div id="wpi_44" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/geocache.png"><br>Geocache</div>
+<div id="wpi_47" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/short_tower.png"><br>Razni objekti</div>
+<div id="wpi_54" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/live_theater.png"><br>Amfiteatri</div>	
+<div id="wpi_55" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/medical_facility.png"><br>Medicinske</div>	
+<div id="wpi_53" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/library.png"><br>Škole</div>	
+<div id="wpi_56" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/wrecker.png"><br>Održavanje</div>	
+
+<!--
+<div id="wpi_57" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/tracback_point.png"><br>KT BM</div>	
+<div id="wpi_58" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/trail_head.png"><br>KT FGM</div>	
+<div id="wpi_59" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/triangle__red.png"><br>KT FGT</div>	
+<div id="wpi_60" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/multi_cache.png"><br>Multi Cache</div>	
+<div id="wpi_61" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/stump.png"><br>Stump</div>	
+<div id="wpi_62" name="nwpg_0" class="menidiv_wp_0"><img src="./img-w/waypoint.png"><br>Waypoint</div>	
+-->
+</div>
+
+
+<div id="wpm_91" class="cmeni-map" style="text-align: center;">	 
+	<div id="wpsx_91" class="menidiv"><img src="./img-m/bb_score_0.png"></div>
+	 <div id="wpsm_1" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Tradicionalne_32.png"><br>Tradicionalne</div>
+	 <div id="wpsm_2" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/FGMaraton_32.png"><br>FG Maraton</div>
+	 <div id="wpsm_3" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/BMaraton_32.png"><br>Buk Maraton</div>
+	 <div id="wpsm_4" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Posebne_32.png"><br>Posebne</div>
+	 <div id="wpsm_5" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Braon_32.png"><br>Braon</div>
+	 <div id="wpsm_6" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Crna_32.png"><br>Crne</div>
+	 <div id="wpsm_7" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Crvena_32.png"><br>Crvene</div>
+	 <div id="wpsm_8" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Plava_32.png"><br>Plave</div>
+	 <div id="wpsm_9" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Zelena_32.png"><br>Zelene</div>
+	 <div id="wpsm_10" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Zuta_32.png"><br>Žute</div>
+	 <div id="wpsm_11" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Staze_Zdravlja_32.png"><br>Staze zdravlja</div>
+	 
+ <div class="spacer" style="clear: both;"></div>
+</div>
+
+<div id="wpm_92" class="cmeni-map" style="text-align: center;">	 
+	<div id="wpsx_92" class="menidiv"><img  src="./img-m/bb_score_0.png"></div>
+	 <div id="wpss_1" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Crvena_32.png"><br>Dečije</div>
+	 <div id="wpss_2" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Plava_32.png"><br>Opuštene</div>
+	 <div id="wpss_3" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Zelena_32.png"><br>Rekreativne</div>
+	 <div id="wpss_4" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Zuta_32.png"><br>Zahtevne</div>
+	 <div id="wpss_5" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Braon_32.png"><br>Ultra</div>
+	 	 	 
+ <div class="spacer" style="clear: both;"></div>
+</div>
+
+
+
+<div id="wpm_93" class="cmeni-map" style="text-align: center;">	 
+	<div id="wpx_93" class="menidiv"><img src="./img-m/bb_score_0.png"></div>
+	 <div id="wpst_1" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Crvena_32.png"><br>2012</div>
+	 <div id="wpst_2" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Plava_32.png"><br>2013</div>
+	 <div id="wpst_3" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Zelena_32.png"><br>2014</div>
+	 <div id="wpst_4" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Zuta_32.png"><br>2015</div>
+	 <div id="wpst_5" name="nwpg_0" class="menidiv_wp_0"><img class="img_zast_staze" src="./img-w/zast/Braon_32.png"><br>2016</div>
+	 	 	 
+ <div class="spacer" style="clear: both;"></div>
+</div>
+
+
+<div id="wpm_94" class="cmeni-map" style="text-align: center;">
+		<div id="wpsx_94" class="menidiv" style="float:left;"><img src="./img-m/bb_score_0.png"></div>
+	
+	<div  class="menidiv_wp_0" style="float:left;text-align:left;">
+		
+
+ 		<input type="checkbox" name="vehicle" value="Car" >Markirane
+ 		<br><input type="checkbox" name="vehicle" value="Car" >Predložene šetnje
+ 		<br><input type="checkbox" name="vehicle" value="Car" >Šetnje naše
+	</div>
+	
+	<div  class="menidiv_wp_0" style="width:200px; padding-bottom:0;float:left;text-align:left;">
+		Dužina
+		<br>
+		<input type="text" id="range_01" name="range_01" value="" />
+	</div>	
+	<div  class="menidiv_wp_0" style="padding-bottom:0;float:left;text-align:left;">
+		Zahtevnost
+		<br><input type="checkbox" name="vehicle" value="Car" >Lagane
+ 		<br><input type="checkbox" name="vehicle" value="Car" >Srednje
+ 		<br><input type="checkbox" name="vehicle" value="Car" >Zahtevne 		
+	</div>	
+	<div  class="menidiv_wp_0" style="padding-bottom:0;float:left;text-align:left;">
+		Lepota
+		<br><input type="checkbox" name="vehicle" value="Car" >Lepe
+ 		<br><input type="checkbox" name="vehicle" value="Car" >Lepše
+ 		<br><input type="checkbox" name="vehicle" value="Car" >Najlepše
+	</div>	
+	
+	 <div  class="menidiv_wp_0" style="float:left;text-align:left;">
+			Start/Cilj
+			<br>
+			<br>
+			<select>
+				<option value="nije-bitno" selected>Nije bitno</option>
+  			<option value="popovica">Popovica</option>
+  			<option value="saab">Zmajevac</option>
+  			<option value="mercedes">Brankovac</option>
+  			<option value="audi">Čot</option>
+			</select>
+		</div>
+	<div  class="menidiv_wp_0" style="float:left;text-align:left;">
+		<input type="checkbox" name="vehicle" value="Car" >Kružna
+		<br><input type="checkbox" name="vehicle" value="Car" > Ravna
+	</div>
+	<div  class="menidiv_wp_0" style="float:left;text-align:left;">
+	<input type="checkbox" name="vehicle" value="Car" >Polazak BUS
+		<br><input type="checkbox" name="vehicle" value="Car" >Samo markiranim
+		<br><input type="checkbox" name="vehicle" value="Car" > Prohodna biciklom 		
+	</div>
+	
+	<button id="btn3" type="button" style="float:left;">Pretraži</button>
+	
+ <div class="spacer" style="clear: both;"></div>
+</div>
+
+
+
+
+
+
+
+
+<!--
+
+
+
+
+
+
+-->
+
+	
+	<div id="divleft" class="div_left" >
+		<button id="btn5elev" type="button" class="but_elev_0">&nbsp;&nbsp;&nbsp;</button>		
+		<button id="btn6wayornot" type="button" class="but_waypoint_0">&nbsp;&nbsp;&nbsp;</button>		
+		<button id="btn4m"type="button"><-</button>		
+		<button id="btn4u"type="button">||</button>
+		<button id="btn4w"type="button">-></button>
+		<button id="btn4c"type="button">>></button>
+<!--	
+		<br>
+		<button id="btn1"type="button">Open</button>
+		<button id="btn2"type="button">Close</button>
+	-->	
+
+
+<div id="polje_0_0" class="div_polje1" style=""></div>
+<div id="polje_1_1" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_2" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_3" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_4" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_5" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_6" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_7" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_8" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_9" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_10" class="div_polje1" style="display:none;"></div>
+<div id="polje_1_11" class="div_polje1" style="display:none;"></div>
+<div id="polje_2_1" class="div_polje1" style="display:none;"></div>
+<div id="polje_2_2" class="div_polje1" style="display:none;"></div>
+<div id="polje_2_3" class="div_polje1" style="display:none;"></div>
+<div id="polje_2_4" class="div_polje1" style="display:none;"></div>
+<div id="polje_2_5" class="div_polje1" style="display:none;"></div>
+<div id="polje_3_1" class="div_polje1" style="display:none;"></div>
+<div id="polje_3_2" class="div_polje1" style="display:none;"></div>
+<div id="polje_3_3" class="div_polje1" style="display:none;"></div>
+<div id="polje_3_4" class="div_polje1" style="display:none;"></div>
+<div id="polje_3_5" class="div_polje1" style="display:none;"></div>
+<div id="polje_4_0" class="div_polje1" style="display:none;"></div>
+
+
+	</div>	
+
+
+
+
+
+
+<!--<div id="map" style="width: 600px; height: 400px"></div>-->
+<div id="map" style="min-width:400px; height: 500px; overflow:hidden; text-align:left;"></div>
+  
+    
+    <!--/****************************/-->
+ <div class="spacer" style="clear: both;"></div>
+    
+    <hr>
+    <div id="opis1" >    	    	
+      </div>      
+    <div id="opis2" style="text-align: left;">    	    	
+      </div>	
+
+<form target="_blank" id="frm_printpdf" method="post"  action="print_pdf.php">
+<input id="hid_printpdf" type="hidden" name="pdf" value="11111111">
+<input id="hid_printpdf_3" type="hidden" name="pdf_3" value="3333">
+</form>
+
+  
+
+    
+<!--/****************************/-->
+ <div class="spacer" style="clear: both;"></div>
+	<div class="cfoot">
+		Fruškoj gori - Planinari slaninari i Staze zdravlja
+</div>
+
+<script>
+// alert("12");
+        var coolPlaces = new L.LayerGroup();
+
+
+        L.marker([45.172810033, 19.752429989])
+            .bindPopup('<a href="ddd.htm">Te Papa</a>').addTo(coolPlaces),
+        L.marker([-41.29437, 174.78405])
+            .bindPopup('Embassy Theatre').addTo(coolPlaces),
+        L.marker([-41.2895, 174.77803])
+            .bindPopup('Michael Fowler Centre').addTo(coolPlaces),
+        L.marker([-41.28313, 174.77736])
+            .bindPopup('Leuven Belgin Beer Cafe').addTo(coolPlaces),
+        L.polyline([
+            [-41.28313, 174.77736],
+            [-41.2895, 174.77803],
+            [-41.29042, 174.78219],
+            [-41.29437, 174.78405]
+            ]
+            ).addTo(coolPlaces);
+
+/////////  Layers        
+       var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+       var thunLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+       var mojLink = 'Planinari slaninari'; 
+       var osmAttrib = '&copy; ' + osmLink + ' Contributors';       
+       var thunAttrib = '&copy; '+osmLink+' Contributors & '+thunLink;
+       var mojAttrib = '&copy; '+mojLink+' Contributors';             
+       //var mojUrl = 'http://fruskojgori.joker007.net/tiles/tiles-31/{z}/{x}/{y}.png';
+       var mojUrl = './tiles/tiles-31/{z}/{x}/{y}.png';
+       var mojUrl2 = 'http://fruskojgori.joker007.net/tiles/tiles-32/{z}/{x}/{y}.png';
+       var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';           
+       var landUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';   
+       var mojBounds = L.latLngBounds(L.latLng(45.07249, 19.44893), L.latLng(45.25568, 19.96937));
+       //var mojBounds = L.latLngBounds(L.latLng(45.07249, 19.44893), L.latLng(45.25486, 19.9661));
+       //var mojBounds = L.latLngBounds(L.latLng(45.09194, 19.77739), L.latLng(45.18397, 19.85367));       
+			 //var mojmaxZoom= 18;//maxZoom: 18,
+       var osmMap  = L.tileLayer(osmUrl, {attribution: osmAttrib});
+       var landMap = L.tileLayer(landUrl, {attribution: thunAttrib});
+			 var mojaMap = L.tileLayer(mojUrl, {attribution: mojAttrib,bounds:mojBounds});		
+			 var mojaMap2 = L.tileLayer(mojUrl2, {attribution: mojAttrib,bounds:mojBounds});		
+			var deferred_google_layers = {
+			roadmap: { name: "roadmap", js: ["https://maps.googleapis.com/maps/api/js?callback=L.Google.asyncInitialize&key=AIzaSyDo0uPf_FXbowql_zituQn9iwFI54P8OCA"], init: function() {return new L.Google("ROADMAP", {detectRetina: true}); }},
+			satellite: { name: "satellite", js: ["https://maps.googleapis.com/maps/api/js?callback=L.Google.asyncInitialize&key=AIzaSyDo0uPf_FXbowql_zituQn9iwFI54P8OCA"], init: function() {return new L.Google("SATELLITE", {detectRetina: true}); }},
+			hybrid: { name: "hybrid", js: ["https://maps.googleapis.com/maps/api/js?callback=L.Google.asyncInitialize&key=AIzaSyDo0uPf_FXbowql_zituQn9iwFI54P8OCA"], init: function() {return new L.Google("HYBRID", {detectRetina: true}); }},
+			terrain: { name: "terrain", js: ["https://maps.googleapis.com/maps/api/js?callback=L.Google.asyncInitialize&key=AIzaSyDo0uPf_FXbowql_zituQn9iwFI54P8OCA"], init: function() {return new L.Google("TERRAIN", {detectRetina: true}); }}
+			};
+			var googleLayer_roadmap = new L.DeferredLayer(deferred_google_layers.roadmap);
+			var googleLayer_satellite = new L.DeferredLayer(deferred_google_layers.satellite);
+			var googleLayer_hybrid = new L.DeferredLayer(deferred_google_layers.hybrid);
+			var googleLayer_terrain = new L.DeferredLayer(deferred_google_layers.terrain);
+		  var map = L.map('map', {
+			    layers: [osmMap] // only add one!
+		    })		    
+		    .setView([45.172810033, 19.752429989], 11);		    
+//CONTROLS
+		var baseLayers = {
+			"OSM Mapnik": osmMap,
+			"Landscape": landMap,			
+			'Google Maps (Roadmap)': googleLayer_roadmap,
+			'Google Maps (Satellite)': googleLayer_satellite,
+			'Google Maps (Hybrid)': googleLayer_hybrid,
+			'Google Maps (Terrain)': googleLayer_terrain						
+		};
+
+		var overlays = {
+			"Interesting places": coolPlaces
+		};
+		var overlays1 = {
+			"Planinari slaninari": mojaMap,
+			"Planinari slaninari markirana": mojaMap2
+		};
+		L.control.layers(baseLayers,overlays1).addTo(map);
+/////////////////////////////
+
+		var baseballIcon = L.icon({
+			iconUrl: './img-w/baseball-marker.png',
+			iconSize: [32, 37],
+			iconAnchor: [16, 37],
+			popupAnchor: [0, -28]
+		});
+		
+		function onEachFeature(feature, layer) {
+			//var popupContent = "<p>I started out as a GeoJSON " +
+			//		feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+
+			var popupContent = "<p>" + feature.properties.name + "<br><img src='./img-w/baseball-marker1.png'></p>";
+
+
+			if (feature.properties && feature.properties.popupContent) {
+				popupContent += feature.properties.popupContent;
+			}
+
+			layer.bindPopup(popupContent);
+		}
+
+/*
+var coorsLayer = L.geoJson(wayPoints, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: baseballIcon});
+			},
+
+			onEachFeature: onEachFeature
+		}).addTo(map);
+
+
+L.geoJson(setPopovica1).addTo(map);
+*/
+ 
+ function convertInFileName(ulStr){
+ 	var radni=ulStr;
+ 	radni=radni.toLowerCase();
+ 	radni=radni.replace(/[\s,)(-]/g, "_");
+ 	radni=radni+'.png';
+ 	radni="./img-w/"+radni;
+ 	return radni;
+ 	}
+ 
+ /*
+ var coorsLayer = L.geoJson(wayPoints, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: L.icon({
+			iconUrl: convertInFileName(feature.properties.sym),
+			iconSize: [32, 37],
+			iconAnchor: [16, 37],
+			popupAnchor: [0, -28]
+		})});
+			},
+
+			onEachFeature: onEachFeature
+		}).addTo(map);
+*/
+var coorsLayer = L.geoJson(wayPoints, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: L.icon({
+			iconUrl: convertInFileName(feature.properties.sym),
+			iconSize: [32, 37],
+			iconAnchor: [16, 37],
+			popupAnchor: [0, -28]
+		})});
+			},
+
+			onEachFeature: onEachFeature
+		});
+		
+	//	coorsLayer.addTo(map);
+/*
+L.geoJson(setPopovica1).addTo(map);
+*/
+ 
+ /*
+L.geoJson(setPopovica1, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: L.icon({
+			iconUrl: feature.properties.sym,
+			iconSize: [32, 37],
+			iconAnchor: [16, 37],
+			popupAnchor: [0, -28]
+		})
+		});
+			},
+
+			onEachFeature: onEachFeature
+		}).addTo(map);
+
+*/
+/*
+		L.geoJson([wayPoints], {
+
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+
+			onEachFeature: onEachFeature,
+
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, {
+					radius: 8,
+					fillColor: "#ff7800",
+					color: "#000",
+					weight: 1,
+					opacity: 1,
+					fillOpacity: 0.8
+				});
+			}
+		}).addTo(map);
+
+*/
+
+
+/*******************
+L.geoJson(freeBus, {
+
+			filter: function (feature, layer) {
+				if (feature.properties) {
+					// If the property "underConstruction" exists and is true, return false (don't render features under construction)
+					return feature.properties.underConstruction !== undefined ? !feature.properties.underConstruction : true;
+				}
+				return false;
+			},
+
+			onEachFeature: onEachFeature
+		}).addTo(map);
+
+
+
+**********************/
+// alert("13");
+var arGrupaLayerWp=new Array();;
+var arGroupNames=[];
+var grupaNiz=[];
+var grupa1=L.layerGroup().addTo(map);
+grupaNiz[1]=L.layerGroup().addTo(map);
+grupaNiz[2]=L.layerGroup().addTo(map);
+grupaNiz[3]=L.layerGroup().addTo(map);
+grupaNiz[4]=L.layerGroup().addTo(map);
+var idOdWp;
+
+
+
+
+
+arGroupNames[1]="Building";
+arGroupNames[2]="Cemetery";
+arGroupNames[3]="Church";
+arGroupNames[4]="Custom 25";
+arGroupNames[5]="Ghost Town";
+arGroupNames[6]="Museum";
+
+
+arGroupNames[7]="City (Medium)";
+arGroupNames[8]="City (Small)";
+arGroupNames[9]="Mine";
+arGroupNames[10]="Summit";
+arGroupNames[11]="Tunnel";
+
+
+
+arGroupNames[12]="Drinking Water";
+arGroupNames[13]="Dropoff";
+arGroupNames[14]="Fishing Area";
+arGroupNames[15]="Levee";
+arGroupNames[16]="Skiing Area";
+arGroupNames[17]="Water Source";
+
+
+arGroupNames[18]="Big Game";
+arGroupNames[19]="Blind";
+arGroupNames[20]="Food Source";
+arGroupNames[21]="Hunting Area";
+
+
+arGroupNames[22]="Cover";
+arGroupNames[23]="Flag";
+arGroupNames[24]="Forest";
+arGroupNames[25]="Park";
+arGroupNames[26]="Tree Stand";
+arGroupNames[27]="Weed Bed";
+
+arGroupNames[28]="Beach";
+arGroupNames[29]="Fitness Center";
+arGroupNames[30]="Information";
+arGroupNames[31]="Picnic Area";
+arGroupNames[32]="Scenic Area";
+arGroupNames[33]="Stadium";
+arGroupNames[34]="Swimming Area";
+
+
+
+arGroupNames[35]="Bar";
+arGroupNames[36]="Lodge";
+arGroupNames[37]="Lodging";
+arGroupNames[38]="Residence";
+arGroupNames[39]="Restaurant";
+arGroupNames[40]="Shopping Center";
+arGroupNames[41]="Winery";
+
+
+arGroupNames[42]="Boat Ramp";
+arGroupNames[43]="Bridge";
+arGroupNames[44]="Geocache";
+arGroupNames[45]="Ground Transportation";	
+arGroupNames[46]="Parking Area";
+arGroupNames[47]="Short Tower";
+arGroupNames[48]="Tall Tower";
+arGroupNames[49]="Toll Booth";
+
+
+arGroupNames[50]="Campground";
+arGroupNames[51]="Civil";
+arGroupNames[52]="Crossing";
+arGroupNames[53]="Library";
+arGroupNames[54]="Live Theater";
+arGroupNames[55]="Medical Facility";
+arGroupNames[56]="Wrecker";
+
+
+/*
+arGroupNames[57]="TracBack Point";
+arGroupNames[58]="Trail Head";
+arGroupNames[59]="Triangle, Red";
+arGroupNames[60]="Multi-Cache";
+arGroupNames[61]="Stump";
+arGroupNames[62]="Waypoint";
+*/
+
+// alert("14");
+for (var i = 0; i < arGroupNames.length; i++){
+    arGrupaLayerWp[i]=new L.LayerGroup();
+}
+var testGrupa=new L.LayerGroup();
+
+//alert(arGrupaLayerWp.length);
+/*
+$.each(wayPoints.features, function(index, element) {
+     L.marker([element.geometry.coordinates[1], element.geometry.coordinates[0]], {icon:  L.icon({iconUrl: convertInFileName(element.properties.sym)})})     
+     .bindPopup('<a href="ddd.htm">'+element.properties.name+'</a>')     
+     .addTo(coolPlaces);    
+});
+*/
+
+$.each(wayPoints.features, function(index, element) {
+		
+		//grOdWp=getWpGropupFromId(arGroupNames.indexOf(element.properties.sym));
+		idOdWp=arGroupNames.indexOf(element.properties.sym);
+		//console.log(element.properties.sym + " - " + arGroupNames.indexOf(element.properties.sym)+ " - " + idOdWp);
+		//console.log(grOdWp);
+     L.marker([element.geometry.coordinates[1], element.geometry.coordinates[0]], {icon:  L.icon({iconUrl: convertInFileName(element.properties.sym),iconSize: [32, 37],
+			iconAnchor: [17, 37],
+			popupAnchor: [0, -28]})})     
+     //.bindPopup('<a href="wp.php?wp='+element.properties.name+'">'+element.properties.name+'</a>')     
+     	.bindPopup(ispisPopUpZaWayPoint(element.properties.name,element.properties.desc))
+    .addTo(arGrupaLayerWp[idOdWp]);    
+  
+});
+
+// alert("15");
+
+$.each(track_11.features, function(index, element) {
+		
+		if(element.geometry.type=="Point"){		  
+			idOdWp=arGroupNames.indexOf(element.properties.sym);
+			//console.log(element.properties.sym + " - " + arGroupNames.indexOf(element.properties.sym)+ " - " + idOdWp);		
+     	L.marker([element.geometry.coordinates[1], element.geometry.coordinates[0]], {icon:  L.icon({iconUrl: convertInFileName(element.properties.sym),iconSize: [32, 37],
+				iconAnchor: [17, 37],
+				popupAnchor: [0, -28]})})     
+     	//.bindPopup('<a href="wp.php?wp='+element.properties.name+'">'+element.properties.name+'</a>')     
+     	.bindPopup(ispisPopUpZaWayPoint(element.properties.name,element.properties.desc))
+    	.addTo(testGrupa);    
+   }//if 
+   
+   
+   
+  
+});
+/*
+var tr11_Layer = L.geoJson(track_11, {
+		pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: baseballIcon});
+			}
+		//	onEachFeature: onEachFeature		
+		));
+	*/	
+//var tr11_Layer = L.geoJson(track_11);
+		
+	//var tr11_Layer = L.geoJson(track_11);	
+
+
+
+		/*
+var coorsLayer = L.geoJson(coorsField, {
+
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng, {icon: baseballIcon});
+			},
+
+			onEachFeature: onEachFeature
+		}).addTo(map);
+*/
+
+/*
+ L.marker(['45.13102054595947', '19.653425216674805'], 
+ {icon:  L.icon({
+ 			iconUrl: convertInFileName('Custom 25'),
+ 			iconSize: [32, 37],
+			iconAnchor: [17, 37],
+			popupAnchor: [0, -28]})
+ }
+			)     
+     .bindPopup('<a href="ddd.htm">'+'Žmirinac22222'+'</a>')     
+    .addTo(testGrupa); 
+*/
+
+ 
+ 
+// alert("16");
+ 
+ function ispisPopUpZaWayPoint(wpIme,wpOpis){
+ 	var wpOpis1="";
+ 	if (typeof wpOpis !== 'undefined') {
+   wpOpis1=wpOpis;
+}
+ 	
+ 	
+ 	$izlaz='<div style="width:200px"><img src="get_image.php?wp='+wpIme+'">'
+ 	+'<hr>'+wpIme
+ 	+'<hr>'+wpOpis1
+ 	+'<br><a target="wp" href="wp.php?wp='+wpIme+'">'+'Opširnije'+'</a>'
+ 	+'</div>';
+ 	return $izlaz;
+ }	
+
+ 
+function dodajLayerOveStaze(indexKliknutogUTrack_bazaStaze){
+	
+	// odustao  -arrRezultatIndexUTrack_bazaStaze[0] je jedini rezultat i menjanjem njga menja se originalni odgovorajuči objekat iz niza track_baza.staze
+
+ 	if (jQuery.isEmptyObject(track_baza.staze[indexKliknutogUTrack_bazaStaze].t_geojson)){
+	//	alert("prazan");
+	//track_baza.staze[0].t_geojson=track_11;
+		$.ajax({
+  		//url: "./js/gpxgeojson/Popovica_Slaninarski_Krug.gpx",
+  		url: "./js/gpx/"+track_baza.staze[indexKliknutogUTrack_bazaStaze].tip+"/"+track_baza.staze[indexKliknutogUTrack_bazaStaze].grupa+"/"+track_baza.staze[indexKliknutogUTrack_bazaStaze].gpxime,
+  		dataType: 'xml',
+  		async: false,
+ 			// data: myData,
+	  	success: function(data) {   
+  	 	//track_baza.staze[0].t_geojson=data;
+   			track_baza.staze[indexKliknutogUTrack_bazaStaze].t_geojson=toGeoJSON.gpx(data);
+   		}
+		});//ajax
+ 	}
+ 	else{
+ 	 //alert("pun");
+ 	}
+ 
+
+ //tr11_Layer = L.geoJson(track_baza.staze[indexKliknutogUTrack_bazaStaze].t_geojson, {
+//console.log(track_baza.staze[indexKliknutogUTrack_bazaStaze].stil);
+ arrLayeriZaStaze[indexKliknutogUTrack_bazaStaze] = L.geoJson(track_baza.staze[indexKliknutogUTrack_bazaStaze].t_geojson, {
+		
+			filter: function (feature, layer) {
+				if( (showWayPointInTrackOrNot==0)&& (feature.geometry.type=="Point") ){					
+					return  false;
+				}
+				return true;
+			},
+			
+			style: {
+          	"className": track_baza.staze[indexKliknutogUTrack_bazaStaze].stil,
+        },				
+			pointToLayer: function (feature, latlng) {
+				return L.marker(latlng,{icon:  L.icon({
+ 			iconUrl: convertInFileName(feature.properties.sym),
+ 			iconSize: [32, 37],
+			iconAnchor: [17, 37],
+			popupAnchor: [0, -28]})		
+		// }).bindPopup('<a href="wp.php?wp='+feature.properties.name+'">'+feature.properties.name+'</a>');
+		 }).bindPopup(ispisPopUpZaWayPoint(feature.properties.name,feature.properties.desc));
+			}
+		});
+
+}//fun
+    				
+
+
+// alert("17");
+
+
+
+	var el = L.control.elevation({
+		position: "bottomleft",
+		   //theme: "steelblue-theme", //default: lime-theme
+    width: 400,
+    height: 120,    
+    useHeightIndicator: false,
+		});
+		el.addTo(map);
+		map.removeControl(el);
+		
+	
+	
+	
+	 
+	 
+	 // alert("18");
+	 
+ var app = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+        app.receivedEvent('deviceready');
+		moja1();
+		 
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+/*     
+	 var parentElement = document.getElementById(id);
+        var listeningElement = parentElement.querySelector('.listening');
+        var receivedElement = parentElement.querySelector('.received');
+
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
+*/
+        console.log('Received Event: ' + id);
+  
+  }
+};
+
+	function moja1(){
+		//alert("mojaaa2");
+		 //navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		 watchMapPosition();
+		//alert("mojaaa2");
+	}
+	
+	
+	var greenIcon = L.icon({
+    iconUrl: './img-m/leaf-green.png',
+    shadowUrl: './img-m/leaf-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+	var obicanIcon = L.icon({
+    iconUrl: './img-m/obican.png'
+});
+
+	
+	// alert("19");
+	
+ function gr_showMaker(k1,k2){
+//L.marker([45.172810033, 19.752429989]).addTo(map); 
+L.marker([k1, k2], {icon: obicanIcon}).addTo(map); 
+//alert("s");
+ } 
+
+  function onSuccess(position) {
+ /*       alert('Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');
+	*/		  
+ //gr_showMaker(45.172810033,19.752429989);
+ gr_showMaker(position.coords.latitude,position.coords.longitude);
+ };
+ 
+ //L.marker([45.172810033, 19.752429989], {icon: obicanIcon}).addTo(map); 
+ 
+// alert("20");
+ //gr_showMaker(45.172810033,19.752429989,L,map);
+ //gr_showMaker(45.172810033,19.752429989);
+ //function gr_showMaker(k1,k2,L,map){
+ 
+	
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+
+	
+	
+	/***************/
+	
+	
+	var onMapWatchSuccess = function (position) {
+gr_showMaker(position.coords.latitude,position.coords.longitude);
+	//alert("12b");
+	/*
+    var updatedLatitude = position.coords.latitude;
+    var updatedLongitude = position.coords.longitude;
+
+    if (updatedLatitude != Latitude && updatedLongitude != Longitude) {
+
+        Latitude = updatedLatitude;
+        Longitude = updatedLongitude;
+
+        getMap(updatedLatitude, updatedLongitude);
+    }
+	*/
+}
+
+// Error callback
+
+function onMapError(error) {
+//alert("12erb"+ " - " + error.code + " - " +error.message);
+    console.log('code: ' + error.code + '\n' +
+        'message: ' + error.message + '\n');
+}
+
+// Watch your changing position
+
+function watchMapPosition() {
+	//alert("11b");
+    return navigator.geolocation.watchPosition
+    (onMapWatchSuccess, onMapError,{  enableHighAccuracy: true });
+}
+	
+	
+	
+	
+	/*************/
+	
+
+/*
+map.on('click', function(e) {
+    alert(e.latlng);
+});
+*/
+
+// alert("21");
+  app.initialize();
+//alert("2");
+ </script>
+ 
+</body>
+</html>
+
+

@@ -1,0 +1,383 @@
+	/**      {margin:0; padding:0;}*/
+
+
+.divtop  { 
+	position:relative; 
+	width:100%;
+	height:40px;
+	padding-top:10px;
+	border-bottom:1px solid blue;
+}
+
+
+   OL { counter-reset: item }
+   LI { display: block }
+   LI:before { content: counters(item, ".") " "; counter-increment: item }
+
+		img.bg {
+			/* Set rules to fill background */
+			min-height: 100%;
+			min-width: 1024px;
+			
+			/* Set up proportionate scaling */
+			width: 100%;
+			height: auto;
+			
+			/* Set up positioning */
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index:-100;
+		}
+		
+		@media screen and (max-width: 1024px){
+			img.bg {
+				left: 50%;
+				margin-left: -512px; }
+		}
+body { 
+	
+
+	
+	font:  arial, sans-serif;
+	color:balck;   
+	 text-align: center;
+	 font-size:18px;
+}
+	
+.chead  { 
+	position:relative; 
+	width:100%; 
+	/*height:300px;*/
+	/*background-image: url("./sony-playstation-wave.png");*/
+	/*background-image: url("./css/izdavanje-sony-playstation-novi-sad-tara.jpg");*/
+
+	
+}
+.cfoot  { 
+	position:relative; 
+	width:100%;
+	margin:20px 0 20px 0;
+	padding-top:10px;
+	border-top:1px solid blue;
+}
+.cmain  { 
+	position:relative;
+	margin-top:30px; 
+	width:100%;
+}
+.cmeni  { 
+	position:relative;
+	margin: 0px 0 0px 0; 
+	padding-bottom:10px;
+	width:100%;
+	font-size: 18px;
+	border-bottom:1px solid blue;
+	border-top:1px solid blue;
+	padding-top:10px;	
+}
+
+.cmeni-map  { 
+	position:relative;
+	margin: 0px 0 0px; 
+	padding-bottom:5px;
+	width:100%;
+	font-size: 14px;
+	border-bottom:1px solid blue;
+	//border-top:1px solid blue;
+	padding-top:5px;
+	min-height:70px;	
+	display:none; 
+
+}	
+.ctext  { 
+	position:relative;
+	margin-top:30px; 
+	//width:100%;
+	max-width:700px;
+    margin-left: auto;
+    margin-right: auto;
+     text-align: left;
+     line-height: 140%;
+	}
+.ctext2  { 
+	position:relative;
+	margin-top:30px; 
+	width:90%;
+	/*max-width:700px;*/
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  line-height: 140%;
+}
+.cent{
+	 margin-left: auto;
+   margin-right: auto;
+   max-width: 700px;	
+}	
+
+.img_zast{
+	width:40px; 
+	margin-left:5px;
+
+}
+.img_zast:hover {
+ opacity: 0.6;
+    filter: alpha(opacity=60); /
+}
+
+.img_med{	
+	width:100%;
+	max-width:656px;
+	border-radius: 25px;
+	 border:3px solid white;
+/* height:369px;*/
+}
+.img_med2{	
+	width:100%;
+	max-width:656px;
+	border-radius: 25px;
+	 border:3px solid white;
+ height:250px;
+}
+.img_small{	
+	border-radius: 25px;
+	width:200px;
+	height:266px;
+	margin-top:10px;
+}
+.img_small2{	
+	border-radius: 25px;
+	border:3px solid white;
+	/*width:300px;
+	height:200px;
+	*/
+		 width:100%;
+	max-width:280px;
+	
+}
+
+
+.imgdiv2{
+	/* border-radius: 25px;*/
+	/* border:1px solid white;*/
+	 margin:0px 10px 0 10px;
+/*
+	 width:90%;
+	max-width:400px;
+	*/
+	 /*width:300px;*/
+	/* height:200px;*/
+	 display:inline-block;
+	 /*vertical-align: text-top;*/
+}
+.dh_center {    
+  text-align: center;
+
+}
+.dh_left {
+  text-align: left;
+}
+.dh_right {
+  text-align: right;
+}
+.joinclear{
+		clear:both;
+}
+
+.siv_poz{
+//	 	background: rgb(33, 33, 33); 
+//  background: rgba(33, 33, 33, .6);  
+ /*display:inline-block;*/
+ padding:5px; 
+/* 	border-radius: 25px;*/
+	}
+	
+	h1{
+ 	font-size:22px; 	 
+ 	line-height: 22px;
+ //	background: rgb(33, 33, 33); 
+ // background: rgba(33, 33, 33, .6);  
+ display:inline-block;
+ padding:5px; 
+ color:blue;
+ }
+ .h1bott{
+	margin-bottom: 10px;
+	}
+h2{
+	font-size:20px;
+	line-height: 20px;
+ 	text-align: center;	
+}
+/**************************/
+@media screen and (min-width: 1024px) {
+h1{
+ 	font-size:42px; 	 
+ 	line-height: 42px;
+ //	background: rgb(33, 33, 33); 
+ // background: rgba(33, 33, 33, .6);  
+ display:inline-block;
+ padding:5px; 
+ color:blue;
+ margin-top:0px;
+ }
+.h1bott{
+	margin-bottom: 10px;
+	}
+h2{
+	font-size:28px;
+	line-height: 32px;
+ 	text-align: center;	
+}
+} 
+/***********************/
+
+.telbr{
+ 	font-size:22px; 	 	
+}
+h1.centh1{
+	text-align: center;
+	color:blue;
+}
+
+h3{
+/*font-size:32px;*/
+ 	/*margin-top:60px;*/
+ 	text-decoration: underline;
+ margin-bottom:10px;
+
+}
+
+
+.menidiv{
+  	 display:inline-block;
+  	 border-radius: 15px;
+	border:1px solid  blue;
+  	margin:0px 3px;
+	color:blue;
+	padding:5px;
+	cursor: pointer; 
+}
+
+.menidiv_1{
+  	 background-color:black;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_2{
+  	 background-color:#66C547;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_3{
+  	 background-color:#0066FF;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_4{
+  	 background-color:#FF0000;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_5{
+  	 background-color:white;  	 
+	border-color:#434343;  	
+	color:#128E4D;	
+}
+.menidiv_6{
+  	 background-color:#FF6600;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_7{
+  	 background-color:#8C4EB8;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_8{
+  	 background-color:#9D7050;  	 
+	border-color:#434343;  	
+	color:white;	
+}
+.menidiv_0{
+  	 background-color:white;  	 
+	border-color:#434343;  	
+	color:#9B9B9B;	
+}
+
+.menidiv_select{
+  text-decoration: underline;
+		padding:3px;
+		border-width:3px;
+		border-color:red; 
+}
+
+.menidiv_wp_0{
+  	 display:inline-block;
+  	 border-radius: 15px;
+	border:1px solid  silver;
+	margin:0px 3px;
+	color:blue;
+	padding:5px;
+	cursor: pointer; 
+	position:relative;
+	float:left;
+}	
+.menidiv_wp_1{
+  	 display:inline-block;
+  	 border-radius: 15px;
+	border:1px solid  red;
+	margin:0px 3px;
+	color:blue;
+	padding:5px;
+	cursor: pointer; 
+}
+a.meni {
+color:blue;
+  text-decoration: none;
+}
+a.meni:visited  {
+ color:blue;
+	text-decoration: none;
+}
+a.meni:hover{
+ 	color: green;
+	text-decoration: none;
+}
+
+a {
+color:blue;
+  text-decoration: none;
+ /*
+  margin:0px;
+  line-height: 50px;
+
+ border-radius: 25px;
+	  border:1px solid  white;
+	
+	padding:10px;
+*/	
+}
+a:visited  {
+  color:blue;
+	text-decoration: none;
+}
+a:hover{
+ 	color: #0064f7;
+	text-decoration: none;
+}
+
+a.maliimg {
+  color: #dddddd;
+  text-decoration: italic;
+    line-height: 20px;
+}
+a.maliimg:visited  {
+  color: #dddddd;
+	text-decoration: none;
+}
+a.maliimg:hover{
+ 	color: #999999;
+	text-decoration: none;
+}
