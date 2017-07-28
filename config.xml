@@ -6,7 +6,7 @@
         id        = "com.phonegap.helloworld"
         version   = "1.1.0">
 
-    <name>FG-11</name>
+    <name>FG170727a</name>
 
     <description>
         Hello World sample application that responds to the deviceready event.
