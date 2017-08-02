@@ -72,8 +72,11 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script type="text/javascript" src="./js/leaflet.elevation-0.0.4.min.js"></script>
-	<script type="text/javascript" src="./js/bouncemarker.js"></scri
-	<script type="text/javascript" src="./js/gpx.js"></script>
+	<script type="text/javascript" src="./js/bouncemarker.js"></script>
+	
+	 <script type="text/javascript"  src="./js/gpx.min.js"></script>
+	 
+	<!--<script type="text/javascript" src="./js/gpx.js"></script>-->
 
 
 <script src="./js/geojson/track-baza-1.js"></script>
@@ -1286,7 +1289,7 @@ $("#range_02").ionRangeSlider({
 <span id="col-minus" class="nadmeni nadmeni_0">-</span>
 <span id="col-plus" class="nadmeni nadmeni_0">+</span>
 <span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="WSDiv('open');">II</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="alert(Status);">wp</span>
+<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="alert(JSON.stringify(arrLocations, null, 4)); ">wp</span>
 <!--<span id="WSDivClose" class="nadmeni nadmeni_0" onclick="WSDiv('close');">0</span>-->
 
 </div>			
@@ -1805,7 +1808,7 @@ $("#range_02").ionRangeSlider({
 			 //var mojmaxZoom= 18;//maxZoom: 18,
        var osmMap  = L.tileLayer(osmUrl, {attribution: osmAttrib});
        var landMap = L.tileLayer(landUrl, {attribution: thunAttrib});
-			 var mojaMap = L.tileLayer(mojUrl, {attribution: mojAttrib,bounds:mojBounds});		
+			 var mojaMap = L.tileLayer(mojUrl, {attribution: mojAttrib,bounds:mojBounds, maxZoom: 20,maxNativeZoom: 15});		
 			 var mojaMap2 = L.tileLayer(mojUrl2, {attribution: mojAttrib,bounds:mojBounds});		
 		
 
@@ -2372,6 +2375,8 @@ function onLine() {
 
 
 
+var arrLocations = new Array();
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -2434,12 +2439,28 @@ var app = {
 	
 	// alert("19");
 	
+	
+var hereYouAre=	L.marker([45.172810033, 19.752429989], {icon: obicanIcon}).addTo(map); 
+	
  function gr_showMaker(k1,k2){
 //L.marker([45.172810033, 19.752429989]).addTo(map); 
-L.marker([k1, k2], {icon: obicanIcon}).addTo(map); 
-//alert("s");
+var timeSada = new Date().valueOf();
+timeSada = timeSada - startTime;
+var loc = {"t":timeSada,"x":k1,"y":k2}
+arrLocations.push(loc);
+//L.marker([k1, k2], {icon: obicanIcon}).addTo(map); 
+hereYouAre.setLatLng([k1, k2]).update();
+//alert(loc);
  } 
 
+ 
+ function gr_showMaker11(k1,k2){
+
+var loc = {"x":k1,"y":k2}
+arrLocations.push(loc);
+//alert(JSON.stringify(arrLocations, null, 4));
+ } 
+ 
   function onSuccess(position) {
  /*       alert('Latitude: '          + position.coords.latitude          + '\n' +
               'Longitude: '         + position.coords.longitude         + '\n' +
@@ -2503,8 +2524,10 @@ function onMapError(error) {
 
 function watchMapPosition() {
 	//alert("11b");
-    return navigator.geolocation.watchPosition
-    (onMapWatchSuccess, onMapError,{  enableHighAccuracy: true });
+    return navigator.geolocation.watchPosition(onMapWatchSuccess, onMapError,{  maximumAge: 3000, enableHighAccuracy: true });
+	
+	//{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
+	
 }
 	
 	
@@ -2524,6 +2547,11 @@ map.on('click', function(e) {
 //alert("2");
 
 
+var startTime =new Date().valueOf();
+
+gr_showMaker11(11,12);
+gr_showMaker11(21,22);
+gr_showMaker11(31,32);
     </script>
  
 </body>
