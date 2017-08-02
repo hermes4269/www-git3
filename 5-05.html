@@ -1289,12 +1289,11 @@ $("#range_02").ionRangeSlider({
 <span id="wportr_14" class="nadmeni nadmeni_0">MojaFG</span>
 <span id="col-minus" class="nadmeni nadmeni_0">-</span>
 <span id="col-plus" class="nadmeni nadmeni_0">+</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="WSDiv('open');">II</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="alert(JSON.stringify(arrLocations, null, 4)); ">wp</span>
+<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="justForTesting();">II</span>
+<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="alert(JSON.stringify(arrLocations, null, 4));writeLog(JSON.stringify(arrLocations, null, 4)); ">wp</span>
 <!--<span id="WSDivClose" class="nadmeni nadmeni_0" onclick="WSDiv('close');">0</span>-->
 
 </div>			
-		
 
 
 <div id="men_tr" class="cmeni-map" style="text-align: center;display:none;min-height:0px;padding-top: 0px;">
@@ -2418,23 +2417,82 @@ var app = {
 		//alert("mojaaa2");
 		 //navigator.geolocation.getCurrentPosition(onSuccess, onError);
 		 watchMapPosition();
-		 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+		 //file 1 
+		 //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+		 //file 2
+		 	window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+		console.log("got main dir",dir);
+		dir.getFile("log222.txt", {create:true}, function(file) {
+			console.log("got the file", file);
+			logOb = file;
+			writeLog("App started");			
+		});
+	});
+		 
 		//alert("mojaaa2");
 	}
 	
 	
-	/********************** file ***********/
+	/********************** file 2 START  ***********/
+	var logOb;
+	function fail(e) {
+	alert(46);
+	alert(e);
+		console.log("FileSystem Error");
+		console.dir(e);
+	}
+	function writeLog(str) {
+alert("31w");	
+	if(!logOb) return;
+	//var log = str + " [" + (new Date()) + "]\n";
+	var log = str;
+	console.log("going to log "+log);
+	logOb.createWriter(function(fileWriter) {
+		
+	//	fileWriter.seek(fileWriter.length);
+		
+		var blob = new Blob([log], {type:'text/plain'});
+		fileWriter.write(blob);
+		console.log("ok, in theory i worked");
+	}, fail);
+}
+
+function justForTesting() {
+alert(41);
+	logOb.file(function(file) {
+		var reader = new FileReader();
+alert(42);
+		reader.onloadend = function(e) {
+alert(43);
+		console.log(this.result);
+alert(this.result);
+			};
+
+		reader.readAsText(file);
+	}, fail);
+
+}  
+	
+	//writeLog("log 111111");
+	
+	
+	/********************** file 2  END ***********/
+	
+	/********************** file 1 ***********/
 	
 	
 	function gotFS(fileSystem) {
         fileSystem.root.getFile("qqqq.txt", {create: true, exclusive: false}, gotFileEntry, fail);
+		alert(11);
     }
 
     function gotFileEntry(fileEntry) {
         fileEntry.createWriter(gotFileWriter, fail);
+		alert(12);
     }
 
     function gotFileWriter(writer) {
+	alert(13);
         writer.onwriteend = function(evt) {
             console.log("contents of file now 'some sample text'");
             writer.truncate(11);
@@ -2448,14 +2506,16 @@ var app = {
             };
         };
         writer.write("some sample text");
+		alert(14);
     }
 
     function fail(error) {
+	alert("21 - " + error.code);
         console.log(error.code);
     }
 	 
 	
-	/********** file end ************/
+	/********** file 1 end ************/
 	
 	
 	
