@@ -327,17 +327,7 @@ function WSFormaDiv(sta){
 		}
 }//fun	
 
-function WSInfoTrackDiv(sta){	
- 		switch(sta){
-			case 'open':
-				$('#wholeScreenInfoTrack').show();				
-			break;
-			case 'close':
-				$('#wholeScreenInfoTrack').hide();			
-			break;
 
-		}
-}//fun	
 	
 
 function WSDivCreateWP(wp){	
@@ -749,10 +739,6 @@ $('#div_polje_mesta').html(ispis_opis_2);
     $("#wholeScreenForma").click(function(){
 				$('#wholeScreenForma').hide();			
 	});	
-    $("#wholeScreenInfoTrack").click(function(){
-				$('#wholeScreenInfoTrack').hide();			
-	});	
-	
 
 
     $("#btn1").click(function(){
@@ -1365,7 +1351,6 @@ $("#range_02").ionRangeSlider({
 <!--<span id="WSDivClose" class="nadmeni nadmeni_0" onclick="WSDiv('close');">0</span>-->
 
 <span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="WSFormaDiv('open');">F</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="WSInfoTrackDiv('open');">TI</span>
 
 <!--<span  id="div_na_poc" class="menidiv menidiv_home" style=""><a href="./ftestzip1/testzip1.txt"><-</a></span>-->
 
@@ -1806,8 +1791,8 @@ $("#range_02").ionRangeSlider({
 	
     <!--/****************************/-->
 	
-<div id="wholeScreenInfoTrack" class="wholeScreen"  style="display:none;">	
-
+	
+<!---------	
  <div class="spacer" style="clear: both;"></div>
     
     <hr>
@@ -1821,7 +1806,8 @@ $("#range_02").ionRangeSlider({
 <input id="hid_printpdf_3" type="hidden" name="pdf_3" value="3333">
 </form>
 
- </div> 
+  
+-->
     
 <!--/****************************/-->
 
@@ -2714,7 +2700,6 @@ for (var i = 1; i <= 3; i++){
 
 
 function takeOrDropPoint(filter,spead,dist,timeFromLast){
-	/*
 	if(spead < trMaxSpead){
 		if (dist > trMinDistance){
 			if(timeFromLast > trMinTimeFromLast){
@@ -2722,17 +2707,6 @@ function takeOrDropPoint(filter,spead,dist,timeFromLast){
 			}
 		}
 	}	
-	*/
-
-	if(spead < dataForVue.wrtrMaxSpead){
-		if (dist > dataForVue.wrtrMinDistance){
-			if(timeFromLast > dataForVue.wrtrMinTimeFromLast){
-				return true;
-			}
-		}
-	}	
-	
-	
 	return false;
 }
 
@@ -2775,7 +2749,7 @@ function gr_showMaker(k1,k2){
 	 if(takeOrDropPoint("log",spead,dist,timeFromLast)){
 				//var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":spead};
 				
-				var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":'s: 'spead,fiter:dataForVue.wrtrMaxSpead + ' d: ' + dataForVue.wrtrMinDistance +  ' t: ' + dataForVue.wrtrMinTimeFromLast};		
+				var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":spead,fiter:dataForVue.wrtrMaxSpead};		
 				arrLocations.push(loc);
 				hereYouAre.setLatLng([k1, k2]).update();
 	//			activeTrackPolyLine.addLatLng ([k1,k2]);	
@@ -2901,7 +2875,7 @@ gr_showMaker11(31,32);
 var dataForVue = {
 	wrtrMaxSpead : 50, //km
 	wrtrMinTimeFromLast : 1,//s
-	wrtrMinDistance : 1 //m
+	wrtrMinDistance : 1 
 };
 
 

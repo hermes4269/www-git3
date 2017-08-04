@@ -36,11 +36,6 @@
 <link rel="stylesheet" href="./css/ion.rangeSlider.skinModern.css"/>
 <!--<link rel="stylesheet" href="./css/ion.rangeSlider.skinFlat.css"/>-->
 
-
-<link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.css"/>
-	<!--<script type="text/javascript" src="./bootstrap/js/bootstrap.js"></script>-->
-
-
 	 <script type="text/javascript" src="cordova.js"></script>
 	<!-- <script type="text/javascript" src="./js/downloader.min.js"></script>--> 
 	<!-- <script type="text/javascript" src="./js/downloader.js">-->
@@ -53,7 +48,7 @@
  <script src="./js/jquery.js"></script>
 
  
- <script src="./js/vue.js"></script>
+ 
  
  
 <!--<script src="./js/jquery.mobile-1.4.5.min.js"></script>-->
@@ -171,7 +166,7 @@
   
   
  
-.wholeScreen
+#wholeScreen
 {
     position:fixed;
     padding:0;
@@ -310,30 +305,6 @@ function WSDiv(sta){
 			break;
 			case 'close':
 				$('#wholeScreen').hide();			
-			break;
-
-		}
-}//fun	
-
-function WSFormaDiv(sta){	
- 		switch(sta){
-			case 'open':
-				$('#wholeScreenForma').show();				
-			break;
-			case 'close':
-				$('#wholeScreenForma').hide();			
-			break;
-
-		}
-}//fun	
-
-function WSInfoTrackDiv(sta){	
- 		switch(sta){
-			case 'open':
-				$('#wholeScreenInfoTrack').show();				
-			break;
-			case 'close':
-				$('#wholeScreenInfoTrack').hide();			
 			break;
 
 		}
@@ -746,13 +717,6 @@ $('#div_polje_mesta').html(ispis_opis_2);
     $("#wholeScreen").click(function(){
 				$('#wholeScreen').hide();			
 	});	
-    $("#wholeScreenForma").click(function(){
-				$('#wholeScreenForma').hide();			
-	});	
-    $("#wholeScreenInfoTrack").click(function(){
-				$('#wholeScreenInfoTrack').hide();			
-	});	
-	
 
 
     $("#btn1").click(function(){
@@ -798,8 +762,8 @@ $(".col1").hammer().on("swipeleft", function(event) {
     /*$(".col3").fadeOut(500);*/
 		colShift('left','minus');
 });
- $(".col1").data('hammer').get('swipe').set({ velocity: 0.20});
- $(".col1").data('hammer').get('swipe').set({ threshold: 5});
+ 
+ 
  
  /*
  $(".col3").on("click",function(){
@@ -1243,39 +1207,7 @@ $("#range_02").ionRangeSlider({
     
      </script>
 
-	 <div id="wholeScreenForma" class="container-fluid wholeScreen"  style="display:none;">
-<div id="app">
-	<div class="row">
-      <div class="col-md-11 col-md-offset-1">
-           <form role="form" class="form-horizontal">
-            <div class="form-group">
-              <label class="col-md-3" for="in_1">Max Brzina</label>
-              <div class="col-md-2">
-			  <input  type="text" name="in_1" class="form-control" id="in_1" v-on:click.stop v-model.lazy.number="wrtrMaxSpead">
-			  </div>
-			 </div>
-            <div class="form-group">
-              <label class="col-md-3" for="in_1">Min Distance</label>
-              <div class="col-md-2">
-			  <input  type="text" name="in_1" class="form-control" id="in_1" v-on:click.stop v-model.lazy.number="wrtrMinDistance">
-			  </div>
-			 </div>
-            <div class="form-group">
-              <label class="col-md-3" for="in_1">Min Time From Last</label>
-              <div class="col-md-2">
-			  <input  type="text" name="in_1" class="form-control" id="in_1" v-on:click.stop v-model.lazy.number="wrtrMinTimeFromLast">
-			  </div>
-			 </div>
-			 
-			 
-			</form>
-	   </div>
-	</div>   
-</div>
-</div>	
-	 
-	 
-	 <div id="wholeScreen" class="wholeScreen"  style="display:none;">
+	 <div id="wholeScreen" style="display:none;">
 	 čkjjlčkj lčkj klčj klj<br>
 	 čkjjlčkj lčkj klčj klj<br>
 	 čkjjlčkj lčkj klčj klj<br>
@@ -1360,16 +1292,11 @@ $("#range_02").ionRangeSlider({
 <span id="wportr_14" class="nadmeni nadmeni_0">MojaFG</span>
 <span id="col-minus" class="nadmeni nadmeni_0">-</span>
 <span id="col-plus" class="nadmeni nadmeni_0">+</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="readLog();">R</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="alert(JSON.stringify(arrLocations, null, 4));writeLog(JSON.stringify(arrLocations, null, 4)); ">W</span>
+<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="readLog();">II</span>
+<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="alert(JSON.stringify(arrLocations, null, 4));writeLog(JSON.stringify(arrLocations, null, 4)); ">wp</span>
 <!--<span id="WSDivClose" class="nadmeni nadmeni_0" onclick="WSDiv('close');">0</span>-->
 
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="WSFormaDiv('open');">F</span>
-<span id="WSDivOpen" class="nadmeni nadmeni_0" onclick="WSInfoTrackDiv('open');">TI</span>
-
-<!--<span  id="div_na_poc" class="menidiv menidiv_home" style=""><a href="./ftestzip1/testzip1.txt"><-</a></span>-->
-
-
+<span  id="div_na_poc" class="menidiv menidiv_home" style=""><a href="./ftestzip1/testzip1.txt"><-</a></span>
 </div>			
 
 
@@ -1472,12 +1399,12 @@ $("#range_02").ionRangeSlider({
   
   <div id="col-left-plus" class="ssss" style="text-align:center; display:block; position:absolute; top: 110px; left:13px; z-index:500;">    
 	<div class="leaflet-control-zoom leaflet-bar leaflet-control" >
-		<a class="leaflet-control-zoom-in" style="padding:1px" href="#" title="Zoom in" role="button" >-></a>
+		<a class="leaflet-control-zoom-in" style="padding:5px" href="#" title="Zoom in" role="button" > -> </a>
 	</div> 
   </div>
   <div id="col-right-plus" class="ssss" style=" text-align:center; display:block; position:absolute; top: 110px; right:13px; z-index:500;">    
 	<div class="leaflet-control-zoom leaflet-bar leaflet-control" >
-		<a class="leaflet-control-zoom-in" style="padding:1px" href="#" title="Zoom in" role="button" ><-</a>
+		<a class="leaflet-control-zoom-in" style="padding:5px" href="#" title="Zoom in" role="button" > <- </a>
 	</div> 
   </div>
   
@@ -1806,8 +1733,8 @@ $("#range_02").ionRangeSlider({
 	
     <!--/****************************/-->
 	
-<div id="wholeScreenInfoTrack" class="wholeScreen"  style="display:none;">	
-
+	
+<!---------	
  <div class="spacer" style="clear: both;"></div>
     
     <hr>
@@ -1821,7 +1748,8 @@ $("#range_02").ionRangeSlider({
 <input id="hid_printpdf_3" type="hidden" name="pdf_3" value="3333">
 </form>
 
- </div> 
+  
+-->
     
 <!--/****************************/-->
 
@@ -1835,9 +1763,6 @@ $("#range_02").ionRangeSlider({
 
 
 </div><!--od div box-->
-
-
-
 
 
 
@@ -2714,7 +2639,6 @@ for (var i = 1; i <= 3; i++){
 
 
 function takeOrDropPoint(filter,spead,dist,timeFromLast){
-	/*
 	if(spead < trMaxSpead){
 		if (dist > trMinDistance){
 			if(timeFromLast > trMinTimeFromLast){
@@ -2722,17 +2646,6 @@ function takeOrDropPoint(filter,spead,dist,timeFromLast){
 			}
 		}
 	}	
-	*/
-
-	if(spead < dataForVue.wrtrMaxSpead){
-		if (dist > dataForVue.wrtrMinDistance){
-			if(timeFromLast > dataForVue.wrtrMinTimeFromLast){
-				return true;
-			}
-		}
-	}	
-	
-	
 	return false;
 }
 
@@ -2773,9 +2686,7 @@ function gr_showMaker(k1,k2){
 	}
 	*/
 	 if(takeOrDropPoint("log",spead,dist,timeFromLast)){
-				//var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":spead};
-				
-				var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":'s: 'spead,fiter:dataForVue.wrtrMaxSpead + ' d: ' + dataForVue.wrtrMinDistance +  ' t: ' + dataForVue.wrtrMinTimeFromLast};		
+				var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":spead};	
 				arrLocations.push(loc);
 				hereYouAre.setLatLng([k1, k2]).update();
 	//			activeTrackPolyLine.addLatLng ([k1,k2]);	
@@ -2895,22 +2806,6 @@ downloader.get("http://localhost:3002/testzip1_iz/testzip1.txt");
 gr_showMaker11(11,12);
 gr_showMaker11(21,22);
 gr_showMaker11(31,32);
-
-
-
-var dataForVue = {
-	wrtrMaxSpead : 50, //km
-	wrtrMinTimeFromLast : 1,//s
-	wrtrMinDistance : 1 //m
-};
-
-
-new Vue({
-   el: '#app',
-   data: dataForVue
-});
-
-
     </script>
  
 </body>
