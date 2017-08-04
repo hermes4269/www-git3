@@ -2775,7 +2775,7 @@ function gr_showMaker(k1,k2){
 	 if(takeOrDropPoint("log",spead,dist,timeFromLast)){
 				//var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":spead};
 				
-				var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":'s: 'spead,fiter:dataForVue.wrtrMaxSpead + ' d: ' + dataForVue.wrtrMinDistance +  ' t: ' + dataForVue.wrtrMinTimeFromLast};		
+				var loc = {"tStart":timeFromStart,"tLast":timeFromLast,"x":k1,"y":k2,"dist":dist,"spead":'s: ' + spead,fiter:dataForVue.wrtrMaxSpead + ' d: ' + dataForVue.wrtrMinDistance +  ' t: ' + dataForVue.wrtrMinTimeFromLast};		
 				arrLocations.push(loc);
 				hereYouAre.setLatLng([k1, k2]).update();
 	//			activeTrackPolyLine.addLatLng ([k1,k2]);	
